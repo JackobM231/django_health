@@ -9,6 +9,9 @@ class BloodPreasure(Timestamp):
   diastolic_bp = models.IntegerField(blank=False, null=False)
   note = models.TextField(max_length=500, blank=True, null=True)
   
+  def __str__(self):
+    return f"BP: {self.systolic_bp}/{self.diastolic_bp} - {self.user}"
+  
   
 class Pulse(Timestamp):
   user = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="pulse")

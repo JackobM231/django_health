@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head %}
+  <title>Log in</title>
+{% endblock %}
+
+{% block body %}
+
+  <div class="col-md-6 offset-md-3 text-center">
+    {% if info %}
+      <h4>{{ info }}</h4>
+    {% endif %}
+    <h3>Please Log in</h3>
+  </div>
+
+  <div class="col-md-6 offset-md-3 text-center mt-4">
+    <form method="POST" class="form-group">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-success mt-2">Log in</button>
+    </form>
+  </div>
+
+{% endblock %}

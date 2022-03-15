@@ -39,9 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # Django applications installed from external modules
+    'crispy_forms',
+    
     # My applications
     'common.apps.CommonConfig',
     'measurements.apps.MeasurementsConfig',
+    'register.apps.RegisterConfig',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +63,7 @@ ROOT_URLCONF = 'health.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'common' / 'templates' / 'common'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,3 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Add / at the end of url adress
 APPEND_SLASH = True
+
+# The URL django will redirect us to after logging in and logging out
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
