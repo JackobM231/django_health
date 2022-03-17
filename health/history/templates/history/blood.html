@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <title>History | Blood preasure</title>
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    
+    <!-- Pagination -->
+    <div aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}&elem={{ elem_on_page }}">&laquo; Previous</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="True">&laquo; Previous</a>
+          </li>
+        {% endif %}
+  
+        {% for i in page_obj.paginator.page_range %}
+          {% if page_obj.number == i %}
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">
+                {{ i }}
+              </span>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ i }}&elem={{ elem_on_page }}" >{{ i }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+  
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}&elem={{ elem_on_page }}">Next &raquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next &raquo;</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <!-- Paginationed user blood preasure -->
+    <div class="list-group list-group-flush">
+      <h3>History of blood preasure measurements</h3> 
+      <div class="d-flex">
+        <h5 class="me-3">Legend:</h5>
+        <p class="list-group-item-info flex-fill">Low</p>
+        <p class="list-group-item-success flex-fill">Normal</p>
+        <p class="list-group-item-warning flex-fill">Elevated</p>
+        <p class="list-group-item-height-warning flex-fill">High blood preasure stage 1</p>
+        <p class="list-group-item-danger flex-fill">High blood preasure stage 2</p>
+        <p class="list-group-item-height-danger flex-fill">Hypertensive crisis</p>
+      </div>
+      <h5>Systolic / Diastolic - Created</h5>
+      {% for h in page_obj %}
+        {% if h.category == category.CRISIS %}
+          <a href="#" class="list-group-item list-group-item-height-danger">
+        {% elif h.category == category.STAGE_2 %}
+          <a href="#" class="list-group-item list-group-item-danger">
+        {% elif h.category == category.STAGE_1 %}
+          <a href="#" class="list-group-item list-group-item-height-warning">
+        {% elif h.category == category.LOW %}
+          <a href="#" class="list-group-item list-group-item-info">
+        {% elif h.category == category.NORMAL %}
+          <a href="#" class="list-group-item list-group-item-success">
+        {% else %}
+          <a href="#" class="list-group-item list-group-item-warning">
+        {% endif %}
+            {{ h.systolic_bp }}/{{ h.diastolic_bp }} - {{ h.created }}
+          </a>
+      {% endfor %}
+    </div>
+
+    <!-- Number of elements per page -->
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-row align-items-center d-flex">
+        <div class="col-auto">
+          <label for="inlineFormCustomSelect">Elements per page</label>
+          <select class="text-center custom-select mx-1" name="selected">
+            <option selected>- {{ elem_on_page }} -</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+        <div class="col-auto m-2">
+          <button type="submit" class="btn btn-primary">Select</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+{% endblock %}

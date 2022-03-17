@@ -3,11 +3,39 @@
 {% load crispy_forms_tags %}
 
 {% block head %}
-  <title>Blood preasure</title>
+  <title>Mesurements | Blood preasure</title>
 {% endblock %}
 
 {% block body %}
-  <div class="col-md-6 offset-md-3 text-center mt-4">
-    {% crispy form %}
+  <div class="container">
+    <h2 class="text-center">Input your blood pressure measurements</h2>
+    <div class="row">
+      <div class="col-md-5 offset-md-1 text-center mt-4">
+        {% if user.is_authenticated %}
+          {% crispy form %}
+        {% else %}
+          <h3 class="text-danger">
+            Please log in to input your blood pressure measurement results.
+          </h3>
+        {% endif %}
+      </div>
+      <div class="col-md-5 offset-md-1 mt-4">
+        <h3>
+          What do blood pressure numbers mean?
+        </h3>
+        <p>
+          Blood pressure is measured using two numbers:
+          <br>
+          The first number, called <strong>systolic</strong> blood pressure,
+          measures the pressure in your arteries when your heart beats.
+          <br>
+          The second number, called <strong>diastolic</strong> blood pressure,
+          measures the pressure in your arteries when your heart rests between beats.
+          <br>
+          If the measurement reads 120 systolic and 80 diastolic, you would say,
+          “120 over 80,” or write, “120/80 mmHg.”
+        </p>
+      </div>
+    </div>
   </div>
 {% endblock %}

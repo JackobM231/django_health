@@ -1,3 +1,13 @@
 body {
   background-color: rgb(224, 224, 224);
 }
+
+.list-group-item-height-warning {
+  background-color: #ffcc8a;
+  color: #664d03;
+}
+
+.list-group-item-height-danger {
+  background-color: #e56975;
+  color: #460202;
+}
