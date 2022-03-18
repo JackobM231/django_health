@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head %}
+  <title>History | Details</title>
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-lg-5">
+        <!-- Blood preasure category check -->
+        {% if m_category == category.CRISIS %}
+          <h5 class="list-group-item list-group-item-height-danger">Hypertensive crisis</h5>
+        {% elif m_category == category.STAGE_2 %}
+          <h5 class="list-group-item list-group-item-danger">High blood preasure stage 2</h5>
+        {% elif m_category == category.STAGE_1 %}
+          <h5 class="list-group-item list-group-item-height-warning">High blood preasure stage 1</h5>
+        {% elif m_category == category.LOW %}
+          <h5 class="list-group-item list-group-item-info">Low</h5>
+        {% elif m_category == category.NORMAL %}
+          <h5 class="list-group-item list-group-item-success">Normal</h5>
+        {% else %}
+          <h5 class="list-group-item list-group-item-warning">Elevated</h5>
+        {% endif %}
+        <!-- Edit form -->
+        {% crispy form %}
+      </div>
+      <div class="col-sm-12 col-lg-6 offset-lg-1">
+        <img class="w-100 rounded" src="https://www.heart.org/-/media/Health-Topics-Images/HBP/blood-pressure-readings-chart-English.jpg" alt="Image with Blood Preasure Categories">
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+
+  <!-- <form method="POST" class="form-group">
+    {% csrf_token %}
+      {{ form|crispy }} -->
+      <!-- {% crispy form %} -->
+    <!-- <div class="d-flex mt-2">
+      <button type="submit" class="btn btn-success">Save Changes</button>
+      <button type="submit" name="delete" value="delete" class="btn btn-danger mx-3">Delete</button>
+      {% if info %}
+        <p class="align-self-center mb-0">{{ info }}</p>
+      {% endif %}
+    </div>
+  </form> -->

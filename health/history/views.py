@@ -1,10 +1,11 @@
 from datetime import datetime
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy, reverse
 
 from measurements.models import BloodPreasure, BPCategory, Pulse, Glucose
+from measurements.forms import BloodPreasureFormEdit
 
 # Create your views here.
 
@@ -35,5 +36,35 @@ def BloodPreasureHistory(request):
                    'elem_on_page': elem_on_page,
                    'category': BPCategory}
                   )
+  else:
+    return HttpResponseRedirect(reverse_lazy('login'))
+  
+  
+def BloodPreasureDetail(request, measurement_id):
+  measurement = get_object_or_404(BloodPreasure, id=measurement_id)
+  if request.user == measurement.user:
+    if request.method == 'POST':
+      if request.POST.get('delete') == 'Delete':
+        measurement.delete()
+        return HttpResponseRedirect(reverse('history:blood_preasure'))
+      else:
+        print(measurement.category, BPCategory.CRISIS)
+        form = BloodPreasureFormEdit(request.POST, instance=measurement)
+        # Instance - we are saving current measurement object not new object
+        if form.is_valid():
+          instance = form.save(commit=False)
+          instance.user = request.user
+          instance.save()
+          return render(request, 'history/details.html',
+                        {'form': form,
+                         'm_category': measurement.category,
+                         'category': BPCategory,
+                         'info': 'Saved'})
+    else:
+      form = BloodPreasureFormEdit(instance=measurement)
+      return render(request, 'history/details.html',
+                    {'form': form,
+                    'm_category': measurement.category,
+                    'category': BPCategory})
   else:
     return HttpResponseRedirect(reverse_lazy('login'))

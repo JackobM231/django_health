@@ -2,6 +2,14 @@ body {
   background-color: rgb(224, 224, 224);
 }
 
+.jump-into {
+  position: relative;
+  animation-name: jump-into;
+  animation-duration: 1.5s;
+}
+
+
+/* OWN ITEM SELECTORS */
 .list-group-item-height-warning {
   background-color: #ffcc8a;
   color: #664d03;
@@ -11,3 +19,11 @@ body {
   background-color: #e56975;
   color: #460202;
 }
+
+
+/* ANIMATIONS */
+@keyframes jump-into {
+  0% {opacity: 0; left: 50px}
+  100% {opacity: 100; left: 0px}
+}
+

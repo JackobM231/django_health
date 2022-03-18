@@ -47,7 +47,7 @@
     </div>
 
     <!-- Paginationed user blood preasure -->
-    <div class="list-group list-group-flush">
+    <div class="list-group">
       <h3>History of blood preasure measurements</h3> 
       <div class="d-flex">
         <h5 class="me-3">Legend:</h5>
@@ -61,17 +61,17 @@
       <h5>Systolic / Diastolic - Created</h5>
       {% for h in page_obj %}
         {% if h.category == category.CRISIS %}
-          <a href="#" class="list-group-item list-group-item-height-danger">
+          <a href="{% url 'history:blood_preasure_details' h.id %}" class="list-group-item list-group-item-height-danger">
         {% elif h.category == category.STAGE_2 %}
-          <a href="#" class="list-group-item list-group-item-danger">
+          <a href="{% url 'history:blood_preasure_details' h.id %}" class="list-group-item list-group-item-danger">
         {% elif h.category == category.STAGE_1 %}
-          <a href="#" class="list-group-item list-group-item-height-warning">
+          <a href="{% url 'history:blood_preasure_details' h.id %}" class="list-group-item list-group-item-height-warning">
         {% elif h.category == category.LOW %}
-          <a href="#" class="list-group-item list-group-item-info">
+          <a href="{% url 'history:blood_preasure_details' h.id %}" class="list-group-item list-group-item-info">
         {% elif h.category == category.NORMAL %}
-          <a href="#" class="list-group-item list-group-item-success">
+          <a href="{% url 'history:blood_preasure_details' h.id %}" class="list-group-item list-group-item-success">
         {% else %}
-          <a href="#" class="list-group-item list-group-item-warning">
+          <a href="{% url 'history:blood_preasure_details' h.id %}" class="list-group-item list-group-item-warning">
         {% endif %}
             {{ h.systolic_bp }}/{{ h.diastolic_bp }} - {{ h.created }}
           </a>
