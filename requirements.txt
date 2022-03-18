@@ -1,0 +1,4 @@
+Django==4.0.3
+django-crispy-forms==1.13.0
+factory-boy==3.2.1
+Faker==9.9.0

@@ -48,7 +48,6 @@ def BloodPreasureDetail(request, measurement_id):
         measurement.delete()
         return HttpResponseRedirect(reverse('history:blood_preasure'))
       else:
-        print(measurement.category, BPCategory.CRISIS)
         form = BloodPreasureFormEdit(request.POST, instance=measurement)
         # Instance - we are saving current measurement object not new object
         if form.is_valid():
