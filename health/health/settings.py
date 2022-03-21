@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     
     # My applications
+    'analysis.apps.AnalysisConfig',
     'common.apps.CommonConfig',
     'history.apps.HistoryConfig',
     'measurements.apps.MeasurementsConfig',
@@ -140,3 +141,6 @@ APPEND_SLASH = True
 # The URL django will redirect us to after logging in and logging out
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+# Template pack for django-crispy-forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
