@@ -19,13 +19,13 @@ class BloodPreasureForm(forms.ModelForm):
     self.helper.form_action = ''
     self.helper.layout = Layout(
       Field(
-        'systolic_bp', css_class='mb-3'
+        'systolic_bp',
       ),
       Field(
-        'diastolic_bp', css_class='mb-3'
+        'diastolic_bp',
       ),
       Field(
-        'created', placeholder=timezone.now(), css_class='mb-3'
+        'created', placeholder=timezone.now(),
       ),
       Field(
         'note', rows=5, placeholder=' Some info for yourself in the future...', css_class='w-100'
@@ -73,3 +73,38 @@ class BloodPreasureFormEdit(BloodPreasureForm):
           css_class='d-flex mt-2 mb-5'
         )
       )
+    
+    
+class GlucoseForm(forms.ModelForm):
+  class Meta:
+    model = Glucose
+    fields = ['glucose_blood', 'glucose_oral', 'created', 'note']
+    labels = {
+      'glucose_blood': 'Glucose blood test',
+      'glucose_oral': 'Glucose oral test',
+    }
+    
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.helper = FormHelper()
+    self.helper.form_method = 'post'
+    self.helper.form_action = ''
+    self.helper.attrs = {'id': 'glucoseForm', 'onsubmit': 'formValidation();'}
+    self.helper.layout = Layout(
+      Field(
+        'glucose_blood', placeholder='mg/dL or mmol/L', css_class='js-measurement'
+      ),
+      Field(
+        'glucose_oral', placeholder='mg/dL or mmol/L', css_class='js-measurement'
+      ),
+      Field(
+        'created', placeholder=timezone.now(),
+      ),
+      Field(
+        'note', rows=5, placeholder=' Some info for yourself in the future...', css_class='w-100'
+      ),
+      ButtonHolder(
+        Submit('submit', 'Save', css_class='btn btn-primary'),
+        css_class='d-flex justify-content-center mt-2'
+      )
+    )

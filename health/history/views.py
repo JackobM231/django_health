@@ -16,8 +16,9 @@ def BloodPreasureHistory(request):
   history = BloodPreasure.objects.filter(user=user)
   
   # Number of elements per page
-  if request.method == 'POST':
-    elem_on_page = int(request.POST.get('selected').strip('-'))
+  if request.method == 'POST' and request.POST.get('selected'):
+      elem_on_page = int(request.POST.get('selected').strip('-'))
+
   # Elements after selecting
   if request.method == 'GET':
     try:

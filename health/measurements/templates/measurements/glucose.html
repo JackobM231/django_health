@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head %}
+  <title>Mesurements | Blood preasure</title>
+{% endblock %}
+
+{% block script %}
+<script>
+  function formValidation() {
+    // Validates that at least one measuremnet field was submitted
+    const all = document.querySelectorAll(".js-measurement");
+    let supplied = 0;
+    for(let i = 0; i < all.length; i++){
+      const input = all[i];
+      if(input.value.length > 0)
+      {
+        supplied++;
+      }
+    }
+
+    if(supplied < 1){ 
+      event.preventDefault();
+      for(let i = 0; i < all.length; i++){
+        const input = all[i];
+        input.classList.add("border-3");
+        input.classList.add("border-danger");
+      }
+      alert("You must enter at least one of blood or oral test result");
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+</script>
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h2 class="text-center">Input your glucose measurements</h2>
+    <h4 class="text-center">Please enter blood test or/and oral test</h4>
+    <div class="row">
+      <div class="col-md-5 offset-md-1 text-center mt-4">
+        {% if user.is_authenticated %}
+          {% crispy form %}
+        {% else %}
+          <h3 class="text-danger">
+            Please log in to input your blood pressure measurement results.
+          </h3>
+        {% endif %}
+      </div>
+      <div class="col-md-5 offset-md-1 mt-4">
+        <h3>
+          Diagnosis
+        </h3>
+        <p>
+          The American Diabetes Association (ADA) recommends 
+          that the following people be screened for diabetes:
+        <ul>
+          <li>
+            <strong>Anyone with a body mass index higher than 25 
+            (23 for Asian Americans), regardless of age,</strong> who has 
+            additional risk factors, such as high blood pressure, 
+            abnormal cholesterol levels, a sedentary lifestyle, a 
+            history of polycystic ovary syndrome or heart disease, and who 
+            has a close relative with diabetes.
+          </li>
+          <li>
+            <strong>Anyone older than age 45</strong> is advised to receive an initial
+            blood sugar screening, and then, if the results are normal,
+            to be screened every three years thereafter.
+          </li>
+          <li>
+            <strong>Women who have had gestational diabetes</strong> are advised to be
+            screened for diabetes every three years.
+          </li>
+          <li>
+            <strong>Anyone who has been diagnosed with prediabetes</strong> is advised 
+            to be tested every year.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
+  <!-- <script>
+    document.addEventListener("DOMContentLoaded", function(e) {
+      const fv = FormValidation.formValidation(
+        document.getElementById("glucoseForm"),
+        {
+          fields: {
+            number: {
+              selector: ".js-measurement",
+              validators: {
+                callback: {
+                  message: "You must enter at least one test result",
+                  callback: function(input) {
+                    let isEmpty = true;
+                    const numberElements = fv.getElements('number');
+                    for (const i in numberElements) {
+                      if (numberElements[i].value !== "") {
+                        isEmpty == false;
+                        break;
+                      }
+                    }
+                    if (!isEmpty) {
+                      // Update the status of callback validator for all fields
+                      fv.updateFieldStatus('number', 'Valid', 'callback');
+                      return true;
+                    }
+                    return false;
+                  }
+                },
+              },
+            },
+          }
+        }
+      );
+    });
+  </script> -->

@@ -8,14 +8,22 @@ body {
   animation-duration: 1.5s;
 }
 
+.form-group {
+  margin-bottom: 1rem;
+}
+
 
 /* OWN ITEM SELECTORS */
-.list-group-item-height-warning {
+.list-group-item-height-warning,
+.table-height-warning > td,
+.table-height-warning > th {
   background-color: #ffcc8a;
   color: #664d03;
 }
 
-.list-group-item-height-danger {
+.list-group-item-height-danger,
+.table-height-danger > td,
+.table-height-danger > th {
   background-color: #e56975;
   color: #460202;
 }
