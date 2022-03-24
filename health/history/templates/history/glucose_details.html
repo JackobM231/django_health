@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head %}
+  <title>History | Details</title>
+{% endblock %}
+
+{% block script %}
+  <script>
+    function formValidation() {
+      // Validates that at least one measuremnet field was submitted
+      const all = document.querySelectorAll(".js-measurement");
+      let supplied = 0;
+      for(let i = 0; i < all.length; i++){
+        const input = all[i];
+        if(input.value.length > 0)
+        {
+          supplied++;
+        }
+      }
+
+      // Save button clicked
+      if(buttonIndex !== 1){
+        if(supplied < 1){ 
+          event.preventDefault();        
+          for(let i = 0; i < all.length; i++){
+            const input = all[i];
+            input.classList.add("border-3");
+            input.classList.add("border-danger");
+          }
+          alert("You must enter at least one of: blood or oral test result");
+          return false;
+        }
+        else{
+          return true;
+        }
+      }
+      // Delete button clicked
+      else{
+        return true;
+      }
+    }
+  </script>
+{% endblock %}
+
+
+{% block body %}
+
+  <div class="container mb-4">
+    <div class="row">
+      <div class="col-sm-12 col-lg-5">
+        <!--Glucose category check -->
+        {% if m_category == category.DIABETES %}
+          <h5 class="list-group-item list-group-item-height-danger">Diabetes probability</h5>
+        {% elif m_category == category.PREDIABETES %}
+          <h5 class="list-group-item list-group-item-height-warning">Prediabetes</h5>
+        {% elif m_category == category.LOW %}
+          <h5 class="list-group-item list-group-item-warning">Low</h5>
+        {% else %}
+          <h5 class="list-group-item list-group-item-success">Normal</h5>
+        {% endif %}
+
+        <!-- Edit form -->
+        {% crispy form %}
+      </div>
+      <div class="col-sm-12 col-lg-6 offset-lg-1">
+        <h3>
+          Tests to diagnose diabetes on our site:
+        </h3>
+        <ul>
+          <li>
+            <strong>Fasting blood sugar test.</strong> A blood sample will
+            be taken after an overnight fast. A fasting blood sugar
+            level less than 100 mg/dL (5.6 mmol/L) is normal. A fasting 
+            blood sugar level from 100 to 125 mg/dL (5.6 to 6.9 mmol/L) 
+            is considered prediabetes. If it's 126 mg/dL (7 mmol/L) or 
+            higher on two separate tests, you have diabetes.
+          </li>
+          <li>
+            <strong>Oral glucose tolerance test.</strong> For this test, you fast 
+            overnight, and the fasting blood sugar level is measured. 
+            Then you drink a sugary liquid, and blood sugar levels are 
+            tested periodically for the next two hours.<br>
+            A blood sugar level less than 140 mg/dL (7.8 mmol/L) is normal. 
+            A reading of more than 200 mg/dL (11.1 mmol/L) after two hours 
+            indicates diabetes. A reading between 140 and 199 mg/dL 
+            (7.8 mmol/L and 11.0 mmol/L) indicates prediabetes.
+          </li>
+        </ul>
+        <h3>
+          Rest of tests to diagnose diabetes:
+        </h3>
+        <ul>
+          <li>
+            <strong>Glycated hemoglobin (A1C) test.</strong> 
+            This blood test, which doesn't require fasting, indicates your 
+            average blood sugar level for the past two to three months. It 
+            measures the percentage of blood sugar attached to hemoglobin, 
+            the oxygen-carrying protein in red blood cells.
+            The higher your blood sugar levels, the more hemoglobin you'll 
+            have with sugar attached. An A1C level of 6.5% or higher on two 
+            separate tests indicates that you have diabetes. An A1C between 
+            5.7 and 6.4 % indicates prediabetes. Below 5.7 is considered normal.
+          </li>
+          <li>
+            <strong>Random blood sugar test.</strong> A blood sample will be 
+            taken at a random time. Regardless of when you last ate, a blood 
+            sugar level of 200 milligrams per deciliter (mg/dL) — 11.1 millimoles 
+            per liter (mmol/L) — or higher suggests diabetes.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

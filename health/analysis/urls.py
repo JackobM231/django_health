@@ -3,5 +3,5 @@ from analysis.views import blood_analysis
 
 app_name = 'analysis'
 urlpatterns = [
-  path('blood/', blood_analysis, name='blood_analysis')
+  path('blood/', blood_analysis, name='blood_preasure_analysis')
 ]

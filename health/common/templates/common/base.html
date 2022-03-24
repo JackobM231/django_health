@@ -44,13 +44,23 @@
               History
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{% url 'history:blood_preasure' %}">Blood</a>
+              <a class="dropdown-item" href="{% url 'history:blood_preasure_history' %}">Blood</a>
               <a class="dropdown-item" href="#">Pulse</a>
-              <a class="dropdown-item" href="#">Glucoze</a>
+              <a class="dropdown-item" href="{% url 'history:glucose_history' %}">Glucoze</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false">
+              Analysis
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'analysis:blood_preasure_analysis' %}">Blood</a>
+              <a class="dropdown-item" href="#">Pulse</a>
+              <a class="dropdown-item" href="{% url 'history:glucose_history' %}">Glucoze</a>
             </div>
           </li>
           <li class="nav-item flex-fill">
-            <a class="nav-link" href="{% url 'analysis:blood_analysis' %}">Analysis</a>
+            <a class="nav-link" href="{% url 'analysis:blood_preasure_analysis' %}">Analysis</a>
           </li>
           <li class="nav-item me-1">
             {% if user.is_authenticated %}

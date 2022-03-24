@@ -80,8 +80,8 @@ class GlucoseForm(forms.ModelForm):
     model = Glucose
     fields = ['glucose_blood', 'glucose_oral', 'created', 'note']
     labels = {
-      'glucose_blood': 'Glucose blood test',
-      'glucose_oral': 'Glucose oral test',
+      'glucose_blood': 'Fasting blood sugar test',
+      'glucose_oral': 'Oral glucose tolerance test',
     }
     
   def __init__(self, *args, **kwargs):
@@ -108,3 +108,27 @@ class GlucoseForm(forms.ModelForm):
         css_class='d-flex justify-content-center mt-2'
       )
     )
+    
+class GlucoseFormEdit(GlucoseForm):
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.helper.layout = Layout(
+        Field(
+          'glucose_blood', placeholder='mg/dL or mmol/L', css_class='js-measurement mb-3'
+        ),
+        Field(
+          'glucose_oral', placeholder='mg/dL or mmol/L', css_class='js-measurement mb-3'
+        ),
+        Field(
+          'created', placeholder=timezone.now(), css_class='mb-3'
+        ),
+        Field(
+          'note', rows=5, placeholder=' Some info for yourself in the future...', css_class='w-100'
+        ),
+        ButtonHolder(
+          Submit('submit', 'Save', onclick="buttonIndex=0;", css_class='btn btn-succes'),
+          Submit('delete', 'Delete', onclick="buttonIndex=1;", css_class='btn btn-danger mx-3'),
+          HTML('''{% if info %}<p class="align-self-center mb-0 jump-into">{{ info }}</p>{% endif %}'''),
+          css_class='d-flex mt-2 mb-5'
+        )
+      )

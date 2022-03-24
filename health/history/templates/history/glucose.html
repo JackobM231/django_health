@@ -1,0 +1,47 @@
+{% extends "base_history.html" %}
+
+{% block head %}
+  <title>History | Glucose</title>
+{% endblock %}
+
+{% block in_body %}
+
+    <!-- Paginationed user glucose measurements -->
+    <div class="list-group">
+      <h3>History of glucose measurements</h3> 
+      <div class="d-flex mb-1">
+        <h5 class="me-3 my-0">Legend:</h5>
+          <p class="list-group-item-warning flex-fill">Low</p>
+          <p class="list-group-item-success flex-fill">Normal</p>
+          <p class="list-group-item-height-warning flex-fill">Prediabetes</p>
+          <p class="list-group-item-height-danger flex-fill">Diabetes probability</p>
+      </div>
+      <h5>Fasting blood sugar test / Oral glucose tolerance test - Created</h5>
+      {% for h in page_obj %}
+        {% if h.category == category.DIABETES %}
+          <a href="{% url 'history:glucose_details' h.id %}" class="list-group-item list-group-item-height-danger">
+        {% elif h.category == category.PREDIABETES %}
+          <a href="{% url 'history:glucose_details' h.id %}" class="list-group-item list-group-item-height-warning">
+        {% elif h.category == category.LOW %}
+          <a href="{% url 'history:glucose_details' h.id %}" class="list-group-item list-group-item-info">
+        {% else %}
+          <a href="{% url 'history:glucose_details' h.id %}" class="list-group-item list-group-item-success">
+        {% endif %}
+            {% if h.glucose_blood %}
+              {{ h.glucose_blood|floatformat }} /
+            {% else %}
+              X /
+            {% endif %}
+            {% if h.glucose_oral %}
+              {{ h.glucose_oral|floatformat }}
+            {% else %}
+            X
+            {% endif %}
+              - {{ h.created }}
+          </a>
+      {% endfor %}
+    </div>
+
+{% endblock %}
+
+<!-- {% url 'history:glucose_details' h.id %} -->

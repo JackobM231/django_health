@@ -27,7 +27,7 @@
         input.classList.add("border-3");
         input.classList.add("border-danger");
       }
-      alert("You must enter at least one of blood or oral test result");
+      alert("You must enter at least one of: blood or oral test result");
       return false;
     }
     else{
@@ -86,38 +86,3 @@
   </div>
 
   {% endblock %}
-  <!-- <script>
-    document.addEventListener("DOMContentLoaded", function(e) {
-      const fv = FormValidation.formValidation(
-        document.getElementById("glucoseForm"),
-        {
-          fields: {
-            number: {
-              selector: ".js-measurement",
-              validators: {
-                callback: {
-                  message: "You must enter at least one test result",
-                  callback: function(input) {
-                    let isEmpty = true;
-                    const numberElements = fv.getElements('number');
-                    for (const i in numberElements) {
-                      if (numberElements[i].value !== "") {
-                        isEmpty == false;
-                        break;
-                      }
-                    }
-                    if (!isEmpty) {
-                      // Update the status of callback validator for all fields
-                      fv.updateFieldStatus('number', 'Valid', 'callback');
-                      return true;
-                    }
-                    return false;
-                  }
-                },
-              },
-            },
-          }
-        }
-      );
-    });
-  </script> -->
