@@ -45,7 +45,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="{% url 'history:blood_preasure_history' %}">Blood</a>
-              <a class="dropdown-item" href="#">Pulse</a>
+              <a class="dropdown-item" href="{% url 'history:pulse_history' %}">Pulse</a>
               <a class="dropdown-item" href="{% url 'history:glucose_history' %}">Glucoze</a>
             </div>
           </li>
@@ -55,7 +55,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="{% url 'analysis:blood_preasure_analysis' %}">Blood</a>
-              <a class="dropdown-item" href="#">Pulse</a>
+              <a class="dropdown-item" href="{% url 'analysis:pulse_analysis' %}">Pulse</a>
               <a class="dropdown-item" href="{% url 'analysis:glucose_analysis' %}">Glucoze</a>
             </div>
           </li>

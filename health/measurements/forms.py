@@ -12,6 +12,10 @@ class BloodPreasureForm(forms.ModelForm):
   class Meta:
     model = BloodPreasure
     fields = ['systolic_bp', 'diastolic_bp', 'created', 'note']
+    labels = {
+      'systolic_bp': 'Systloic blood preasure',
+      'diastolic_bp': 'Diastolic blood preasure'
+      }
     
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
@@ -20,10 +24,10 @@ class BloodPreasureForm(forms.ModelForm):
     self.helper.form_action = ''
     self.helper.layout = Layout(
       Field(
-        'systolic_bp',
+        'systolic_bp', placeholder='mmHg',
       ),
       Field(
-        'diastolic_bp',
+        'diastolic_bp', placeholder='mmHg',
       ),
       Field(
         'created', placeholder=timezone.now(),
@@ -36,30 +40,17 @@ class BloodPreasureForm(forms.ModelForm):
         css_class='d-flex justify-content-center mt-2'
       )
     )
-    # self.helper.layout = Layout(
-    #   Row(
-    #     Column('systolic_bp', css_class='form-group col-md-6'),
-    #     Column('diastolic_bp', css_class='form-group col-md-6'),
-    #     css_class='form-row'
-    #   ),
-    #   Field(
-    #     'note', placeholder=' Some info for yourself in the future...'
-    #   ),
-    #   ButtonHolder(
-    #     Submit('submit', 'Save', css_class='btn btn-primary'),
-    #     css_class='d-flex justify-content-center mt-2'
-    #   )
-    # )
+
     
 class BloodPreasureFormEdit(BloodPreasureForm):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
     self.helper.layout = Layout(
         Field(
-          'systolic_bp', css_class='mb-3'
+          'systolic_bp', placeholder='mmHg', css_class='mb-3'
         ),
         Field(
-          'diastolic_bp', css_class='mb-3'
+          'diastolic_bp', placeholder='mmHg', css_class='mb-3'
         ),
         Field(
           'created', placeholder=timezone.now(), css_class='mb-3'
@@ -87,7 +78,7 @@ class PulseForm(forms.ModelForm):
     self.helper.form_action = ''
     self.helper.layout = Layout(
       Field(
-        'pulse', placeholder='beats per minute',
+        'pulse', placeholder='bpm',
       ),
       Field(
         'created', placeholder=timezone.now(),
@@ -106,7 +97,7 @@ class PulseFormEdit(PulseForm):
     super().__init__(*args, **kwargs)
     self.helper.layout = Layout(
         Field(
-          'glucose_blood', placeholder='beats per minute',
+          'pulse', placeholder='bpm',
         ),
         Field(
           'created', placeholder=timezone.now(), css_class='mb-3'

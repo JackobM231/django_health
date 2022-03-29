@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <title>Analysis | Pulse</title>
+{% endblock %}
+
+
+{% block body %}
+<div class="Chart w-100">
+    <h3 class="text-center">Pulse graph</h3>
+    <canvas id="myChart"></canvas>
+    <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    Chart.defaults.color = ['rgb(33, 37, 41)'];
+    const myChart = new Chart(ctx, {
+      data: {
+        labels: [{% for data in data %}'{{data.created|date:"d-m-Y"}}',{% endfor %}],
+        datasets: [{
+          type: 'line',
+          label: 'Pulse (heart rate)',
+          order: 2,
+          data: [{% for data in data %}{{data.pulse}},{% endfor %}],
+          backgroundColor: ['rgba(255, 99, 132, 0.3)'],
+          borderColor: ['rgba(255, 99, 132, 1)'],
+          borderWidth: 1.5,
+          fill: true,
+        }, {
+          type: 'line',
+          label: 'Average',
+          order: 1,
+          data: [
+                {x:'{{data.0.created|date:"d-m-Y"}}', y:{{pulse.2}}},
+                {x:'{{ last.created|date:"d-m-Y" }}', y:{{pulse.2}}}
+          ],
+          backgroundColor: ['rgba(44, 240, 67, 0)'],
+          borderColor: [
+          'rgba(5, 22, 77, 0.6)',
+          ],
+          borderWidth: 1.5,
+          borderDash: [8,10],
+        }],
+      },
+      options: {
+        plugins: {
+          legend: {
+            rtl: true,
+            labels: {
+              padding: 30,
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: '[bpm]',
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Measure day',
+            }
+          }
+        }
+      },
+    });
+    </script>
+</div>
+<div class="table p-2">
+  <h5>Your results: </h5>
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-active text-center">
+        <th scope="col"></th>
+        <th scope="col">Systolic blood preasure [mm Hg]</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      <tr class={{category}}>
+        <th scope="row" style="color: #000;">Avarage</th>
+        <td>{{pulse.2}}</td>
+      </tr>
+      <tr class="table-light">
+        <th scope="row">Maximal</th>
+        <td>{{pulse.0.0}}</td>
+      </tr>
+      <tr class="table-light">
+        <th scope="row">Minimal</th>
+        <td>{{pulse.1.0}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+
+{% block script %}
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+{% endblock %}

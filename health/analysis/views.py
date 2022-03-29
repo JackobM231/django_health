@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.db.models import Avg, Max, Min
 
-from measurements.models import BloodPreasure, Glucose
+from measurements.models import BloodPreasure, Pulse, Glucose
 
 # Create your views here.
 @login_required
@@ -34,6 +34,30 @@ def blood_analysis(request):
                   'systolic': [systolic_max, systolic_min, systolic_avg],
                   'diastolic': [diastolic_max, diastolic_min, diastolic_avg],
                   'category': category
+                })
+  
+  
+@login_required
+def pulse_analysis(request):
+  data = Pulse.objects.filter(user_id=request.user.id)
+  pulse_max = data.aggregate(Max('pulse'))['pulse__max'],
+  pulse_min = data.aggregate(Min('pulse'))['pulse__min'],
+  pulse_avg = int(data.aggregate(Avg('pulse'))['pulse__avg'])
+  
+  if pulse_avg < 60:
+    category = 'table-warning'
+  elif pulse_avg > 100:
+    category = 'table-height-warning'
+  else:
+    category = 'table-success'
+    
+  last = data.last()
+  
+  return render(request, 'analysis/pulse.html',
+                {'data': data,
+                  'pulse': [pulse_max, pulse_min, pulse_avg],
+                  'category': category,
+                  'last': last,
                 })
   
   

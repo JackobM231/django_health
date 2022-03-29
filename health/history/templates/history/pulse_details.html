@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head %}
+  <title>History | Details</title>
+{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-lg-5">
+        <!-- Blood preasure category check -->
+        {% if m_category == category.LOW %}
+          <h5 class="list-group-item list-group-item-warning">Low</h5>
+        {% elif m_category == category.HIGH %}
+          <h5 class="list-group-item list-group-item-height-warning">High</h5>
+        {% else %}
+          <h5 class="list-group-item list-group-item-success">Normal</h5>
+        {% endif %}
+        <!-- Edit form -->
+        {% crispy form %}
+      </div>
+      <div class="col-sm-12 col-lg-6 offset-lg-1">
+        <h3>
+          What is a normal heart rate?
+        </h3>
+        <p>
+          A normal heart rate, when you're not being active, 
+          is generally between 60 – 100 beats per minute. 
+          This is called your resting heart rate.
+        </p>
+        <p>
+          Athletes or people who are very fit may have resting
+          heart beats of less than 60 bpm.
+        </p>
+        <p>
+          When you're active, your heart beats faster to get
+          more oxygen to your working muscles. The harder 
+          your body is working, the faster your heart will beat. 
+          For example, your heart rate when you're sprinting 
+          will be much faster than your heart rate when you're 
+          walking. If you're exercising hard, it's normal for your 
+          heart rate to get up to 160 beats per minute or more.
+        </p>
+        <p>
+          There are other things that can make your heart beat 
+          faster, like caffeine, nicotine, recreational drugs 
+          and some kinds of medications. Your heart will also 
+          beat faster when you feel strong emotions, like anxiety, 
+          fear or excitement.
+        </p>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
