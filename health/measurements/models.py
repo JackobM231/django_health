@@ -41,13 +41,34 @@ class BloodPreasure(Timestamp):
   def __str__(self):
     return f"BP: {self.systolic_bp}/{self.diastolic_bp} - {self.user}"
   
-  
+
+class PCategory(models.IntegerChoices):
+  '''PulseCategory'''
+  LOW = 1, 'low'
+  NORMAL = 2, 'normal'
+  HIGH = 3, 'high'
+
 class Pulse(Timestamp):
   user = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="pulse")
   pulse = models.IntegerField(blank=False, null=False)
+  category = models.PositiveSmallIntegerField(default=PCategory.NORMAL)
   note = models.TextField(max_length=500, blank=True, null=True)
-
-
+  
+  def save(self, *args, **kwargs):
+    '''Assigns to the appropriate category of pulse.'''
+    pulse = self.pulse
+    if pulse < 60:
+      self.category=PCategory.LOW
+    elif pulse > 100:
+      self.category=PCategory.HIGH
+    else:
+      self.category=PCategory.NORMAL
+    super().save(*args, **kwargs)
+  
+  def __str__(self):
+    return f"Pulse: {self.pulse} - {self.user}"
+  
+  
 class GCategory(models.IntegerChoices):
   '''GlucoseCategory'''
   LOW = 1, 'low'
@@ -65,10 +86,10 @@ class Glucose(Timestamp):
   def save(self, *args, **kwargs):
     '''Assigns to the appropriate category of glucose.'''
     if self.glucose_blood and self.glucose_blood < 35:
-      # Change 1 mmol/l = 18mg/dl
+      # Change 1 mmol/l = 18mg/dL
       self.glucose_blood = round(self.glucose_blood * 18)
     if self.glucose_oral and self.glucose_oral < 35:
-      # Change 1 mmol/l = 18mg/dl
+      # Change 1 mmol/l = 18mg/dL
       self.glucose_oral = round(self.glucose_oral * 18)
     blood = self.glucose_blood
     oral = self.glucose_oral
@@ -87,7 +108,7 @@ class Glucose(Timestamp):
   
 def glucose_blood(blood):
   '''Category assignment depending of Fasting blood sugar test.'''
-  # if blood > 35:
+  # if blood >= 35:
   if blood < 70:
     return GCategory.LOW
   elif blood < 100:
@@ -108,7 +129,7 @@ def glucose_blood(blood):
 
 def glucose_oral(oral):
   '''Category assignment depending of Oral glucose tolerance test.'''
-  # if oral > 35:
+  # if oral >= 35:
   if oral < 60:
     return GCategory.LOW
   elif oral < 140:

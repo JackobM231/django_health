@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head %}
+  <title>Mesurements | Pulse</title>
+{% endblock %}
+
+{% block body %}
+  <div class="container mb-4">
+    <h2 class="text-center">Input your pulse measurements</h2>
+    <div class="row">
+      <div class="col-md-5 offset-md-1 text-center mt-4">
+        {% if user.is_authenticated %}
+          {% crispy form %}
+        {% else %}
+          <h3 class="text-danger">
+            Please log in to input your pulse measurement results.
+          </h3>
+        {% endif %}
+      </div>
+      <div class="col-md-5 offset-md-1 mt-4">
+        <h3>
+          What is the pulse rate?
+        </h3>
+        <p>
+          The pulse rate is a measurement of the heart rate,
+          or the number of times the heart beats per minute.
+          As the heart pushes blood through the arteries,
+          the arteries expand and contract with the flow of the blood.
+          Taking a pulse not only measures the heart rate, but also can
+          indicate the following:
+          <ul>
+            <li><strong>Heart rhythm</strong></li>
+            <li><strong>Strength of the pulse</strong></li>
+          </ul>
+          <br>
+          <a href="https://www.hopkinsmedicine.org/health/conditions-and-diseases/vital-signs-body-temperature-pulse-rate-respiration-rate-blood-pressure">
+            <h5>How to check your pulse &raquo;</h5>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

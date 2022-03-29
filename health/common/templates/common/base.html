@@ -35,7 +35,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="{% url 'measurements:blood_measure' %}">Blood</a>
-              <a class="dropdown-item" href="#">Pulse</a>
+              <a class="dropdown-item" href="{% url 'measurements:pulse_measure' %}">Pulse</a>
               <a class="dropdown-item" href="{% url 'measurements:glucose_measure' %}">Glucoze</a>
             </div>
           </li>
@@ -49,18 +49,15 @@
               <a class="dropdown-item" href="{% url 'history:glucose_history' %}">Glucoze</a>
             </div>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown flex-fill">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false">
               Analysis
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="{% url 'analysis:blood_preasure_analysis' %}">Blood</a>
               <a class="dropdown-item" href="#">Pulse</a>
-              <a class="dropdown-item" href="{% url 'history:glucose_history' %}">Glucoze</a>
+              <a class="dropdown-item" href="{% url 'analysis:glucose_analysis' %}">Glucoze</a>
             </div>
-          </li>
-          <li class="nav-item flex-fill">
-            <a class="nav-link" href="{% url 'analysis:blood_preasure_analysis' %}">Analysis</a>
           </li>
           <li class="nav-item me-1">
             {% if user.is_authenticated %}

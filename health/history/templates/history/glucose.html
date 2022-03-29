@@ -23,7 +23,7 @@
         {% elif h.category == category.PREDIABETES %}
           <a href="{% url 'history:glucose_details' h.id %}" class="list-group-item list-group-item-height-warning">
         {% elif h.category == category.LOW %}
-          <a href="{% url 'history:glucose_details' h.id %}" class="list-group-item list-group-item-info">
+          <a href="{% url 'history:glucose_details' h.id %}" class="list-group-item list-group-item-warning">
         {% else %}
           <a href="{% url 'history:glucose_details' h.id %}" class="list-group-item list-group-item-success">
         {% endif %}

@@ -14,7 +14,7 @@ from measurements.forms import BloodPreasureFormEdit, GlucoseFormEdit
 @login_required
 def BloodPreasureHistory(request):
   user = request.user
-  history = BloodPreasure.objects.filter(user=user)
+  history = BloodPreasure.objects.filter(user=user).order_by('-created')
   
   # Number of elements per page
   if request.method == 'POST' and request.POST.get('selected'):
@@ -74,7 +74,7 @@ def BloodPreasureDetail(request, measurement_id):
 @login_required
 def GlucoseHistory(request):
   user = request.user
-  history = Glucose.objects.filter(user=user)
+  history = Glucose.objects.filter(user=user).order_by('-created')
   
   # Number of elements per page
   if request.method == 'POST' and request.POST.get('selected'):
